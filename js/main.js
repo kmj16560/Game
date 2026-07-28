@@ -1,13 +1,8 @@
-/**
- * 잔별(Janbyeol) 메인 자바스크립트
- * 메인 팝업 및 게임 선택 모달 제어
- */
-
 document.addEventListener("DOMContentLoaded", () => {
-    // DOM 요소 선택
-    const enterBtn = document.getElementById("enterBtn");
+    // DOM 요소 선택 (HTML의 id와 일치하도록 수정)
+    const enterBtn = document.getElementById("openGameModal"); // 수정 완료
     const gameModal = document.getElementById("gameModal");
-    const closeModal = document.getElementById("closeModal");
+    const closeModal = document.getElementById("closeGameModal"); // 수정 완료
     
     // 게임 선택 버튼들
     const selectFpsGame = document.getElementById("selectFpsGame");
@@ -34,14 +29,14 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    // 4. Glitch:Off 선택 시 -> 게임 소개 페이지의 FPS 섹션으로 이동하도록 수정
+    // 4. Glitch:Off 선택 시
     if (selectFpsGame) {
         selectFpsGame.addEventListener("click", () => {
-            window.location.href = "pages/game.html#fps-section";
+            window.location.href = "pages/glitch-off.html#fps-section";
         });
     }
 
-    // 5. 비엔토 선택 시 -> 게임 소개 페이지의 RPG 섹션으로 이동
+    // 5. 비엔토 선택 시
     if (selectRpgGame) {
         selectRpgGame.addEventListener("click", () => {
             window.location.href = "pages/game.html#rpg-section";
