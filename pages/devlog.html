@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>개발 일지 - 잔별 : Janbyeol</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <style>
+        /* 개발 일지 페이지 전용 스타일 */
+        .devlog-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        .devlog-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .devlog-header h2 {
+            font-size: 2.5rem;
+            color: var(--accent-cyan);
+            margin-bottom: 0.5rem;
+        }
+
+        .devlog-header p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+        }
+
+        .timeline {
+            position: relative;
+            padding-left: 2rem;
+            border-left: 2px solid var(--border-color);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 2.5rem;
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -2.35rem;
+            top: 1.5rem;
+            width: 12px;
+            height: 12px;
+            background-color: var(--accent-cyan);
+            border-radius: 50%;
+            box-shadow: 0 0 8px var(--accent-cyan);
+        }
+
+        .timeline-date {
+            font-size: 0.95rem;
+            color: var(--accent-cyan);
+            font-weight: bold;
+            margin-bottom: 0.75rem;
+        }
+
+        .timeline-content ul {
+            list-style: disc;
+            padding-left: 1.5rem;
+            color: var(--text-muted);
+        }
+
+        .timeline-content li {
+            margin-bottom: 0.4rem;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 헤더 영역 (js/header.js로 자동 동적 생성) -->
+    <header id="header"></header>
+
+    <!-- 메인 컨텐츠 영역 -->
+    <main>
+        <div class="devlog-container">
+            
+            <div class="devlog-header">
+                <h2>개발 일지 (DevLog)</h2>
+                <p>잔별 포털 및 게임 제작의 발자취</p>
+            </div>
+
+            <div class="timeline">
+                <!-- 개발 일지 항목 2 -->
+                <div class="timeline-item">
+                    <div class="timeline-date">2026.08.15</div>
+                    <div class="timeline-content">
+                        <ul>
+                            <li>'Glitch:Off' 해커 해방군 명칭 <strong>'브레이크 아웃(Breakout)'</strong> 공식 적용</li>
+                            <li>세계관 및 게임 소개 상세 내용 고도화</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- 개발 일지 항목 1 -->
+                <div class="timeline-item">
+                    <div class="timeline-date">2026.08.01</div>
+                    <div class="timeline-content">
+                        <ul>
+                            <li>잔별 공식 홈페이지 제작 시작</li>
+                            <li>사이버 & 판타지 다크 테마 UI 디자인 및 기본 공통 레이아웃 구축</li>
+                            <li>게임 선택 팝업 모달 및 반응형 네비게이션 구현</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- 푸터 영역 (js/footer.js로 자동 동적 생성) -->
+    <footer id="footer"></footer>
+
+    <!-- 자바스크립트 로드 -->
+    <script src="../js/header.js"></script>
+    <script src="../js/footer.js"></script>
+    <script src="../js/menu.js"></script>
+    <script src="../js/main.js"></script>
+</body>
+</html>

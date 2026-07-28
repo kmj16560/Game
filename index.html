@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>잔별 : Janbyeol - 공식 홈페이지</title>
+    <link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+
+    <!-- 헤더 영역 (js/header.js로 자동 동적 생성) -->
+    <header id="header"></header>
+
+    <!-- 메인 컨텐츠 영역 -->
+    <main>
+        <section class="hero">
+            <h1>두 개의 세계, <span>두 개의 이야기</span></h1>
+            <p>사이버와 판타지가 공존하는 작은 세계, '잔별'에 오신 것을 환영합니다.</p>
+            <div class="cta-buttons">
+                <button id="openGameModal" class="btn btn-primary">게임 시작</button>
+                <a href="./pages/game.html" class="btn btn-secondary">게임 소개</a>
+                <a href="./pages/lore.html" class="btn btn-accent">세계관 소개</a>
+            </div>
+        </section>
+    </main>
+
+    <!-- 게임 선택 팝업 모달 -->
+    <div id="gameModal" class="modal">
+        <div class="modal-content">
+            <h2>플레이할 게임을 선택하세요</h2>
+            <div class="modal-game-options">
+                <a href="./pages/game.html#fps-section" class="btn btn-primary">Glitch:Off (FPS) - 게임 시작</a>
+                <div class="btn btn-disabled">비엔토: 바람의 서사시 (RPG) - 제작 예정</div>
+            </div>
+            <button id="closeGameModal" class="modal-close">닫기</button>
+        </div>
+    </div>
+
+    <!-- 푸터 영역 (js/footer.js로 자동 동적 생성) -->
+    <footer id="footer"></footer>
+
+    <!-- 자바스크립트 로드 -->
+    <script src="./js/header.js"></script>
+    <script src="./js/footer.js"></script>
+    <script src="./js/menu.js"></script>
+    <script src="./js/main.js"></script>
+</body>
+</html>

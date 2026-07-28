@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Glitch:Off - 3D FPS Mode</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <style>
+        /* 3D FPS 전용 스타일 */
+        .play-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 1.5rem 1rem;
+            text-align: center;
+        }
+
+        .game-header {
+            margin-bottom: 1rem;
+        }
+
+        .game-header h2 {
+            color: var(--accent-cyan);
+            font-size: 1.8rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .game-header p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        #canvas-container {
+            position: relative;
+            width: 800px;
+            height: 450px;
+            margin: 0 auto;
+            border: 2px solid var(--accent-cyan);
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(77, 238, 234, 0.3);
+            overflow: hidden;
+            background-color: #05050a;
+        }
+
+        #crosshair {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 10px;
+            height: 10px;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            border: 2px solid rgba(77, 238, 234, 0.8);
+            border-radius: 50%;
+        }
+
+        #blocker {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(5, 5, 10, 0.85);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            z-index: 10;
+        }
+
+        #blocker h1 {
+            color: var(--accent-cyan);
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        #blocker p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+        }
+
+        .game-ui-info {
+            margin-top: 1rem;
+            color: var(--text-main);
+            font-size: 1.1rem;
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+        }
+
+        .game-controls-help {
+            margin-top: 0.75rem;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+    </style>
+    <!-- Three.js 라이브러리 CDN 로드 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+</head>
+<body>
+
+    <!-- 헤더 영역 -->
+    <header id="header"></header>
+
+    <!-- 메인 컨텐츠 영역 -->
+    <main>
+        <div class="play-container">
+            <div class="game-header">
+                <h2>Glitch:Off : 3D Protocol</h2>
+                <p>메인프레임 방어망을 뚫고 탈출 포탈(초록색 기둥)에 도달하세요.</p>
+            </div>
+
+            <!-- 3D 렌더링 캔버스 컨테이너 -->
+            <div id="canvas-container">
+                <div id="crosshair"></div>
+                <div id="blocker">
+                    <h1>CLICK TO START</h1>
+                    <p>클릭하여 메인프레임에 접속하세요 (시점에 따른 방향 이동 적용)</p>
+                </div>
+            </div>
+
+            <div class="game-ui-info">
+                <span id="scoreDisplay">SCORE: 0</span>
+                <span id="hpDisplay">SYSTEM HP: 100</span>
+                <span id="objectiveDisplay">목표: 탈출 포탈 도달</span>
+            </div>
+
+            <div class="game-controls-help">
+                [WASD] 시점 방향 이동 | [마우스] 시점 조준 | [클릭] 사격 | [ESC] 마우스 해제
+            </div>
+        </div>
+    </main>
+
+    <!-- 푸터 영역 -->
+    <footer id="footer"></footer>
+
+    <!-- 자바스크립트 로드 -->
+    <script src="../js/header.js"></script>
+    <script src="../js/footer.js"></script>
+    <script src="../js/menu.js"></script>
+    <script src="../js/main.js"></script>
+
+    <!-- 3D FPS 게임 로직 스크립트 -->
+    <script>
+        const container = document.getElementById('canvas-container');
+        const blocker = document.getElementById('blocker');
+        const scoreDisplay = document.getElementById('scoreDisplay');
+        const hpDisplay = document.getElementById('hpDisplay');
+
+        let scene, camera, renderer;
+        let moveForward = false, moveBackward = false, moveLeft = false, moveRight = false;
+        let prevTime = performance.now();
+
+        let hp = 100;
+        let score = 0;
+        let gameActive = false;
+
+        let bullets = [];
+        let enemies = [];
+        let portal = null;
+
+        let pitch = 0;
+        let yaw = 0;
+
+        init();
+        animate();
+
+        function init() {
+            // 1. Scene 생성
+            scene = new THREE.Scene();
+            scene.background = new THREE.Color(0x05050a);
+            scene.fog = new THREE.FogExp2(0x05050a, 0.04);
+
+            // 2. Camera 생성
+            camera = new THREE.PerspectiveCamera(70, 800 / 450, 0.1, 1000);
+            camera.position.set(0, 1.6, 0);
+
+            // 3. Renderer 생성
+            renderer = new THREE.WebGLRenderer({ antialias: true });
+            renderer.setSize(800, 450);
+            container.appendChild(renderer.domElement);
+
+            // 4. 조명
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.7);
+            scene.add(ambientLight);
+
+            // 5. 바닥 및 벽면
+            const floorGeo = new THREE.PlaneGeometry(100, 100, 40, 40);
+            const floorMat = new THREE.MeshBasicMaterial({ color: 0x111122, wireframe: true });
+            const floor = new THREE.Mesh(floorGeo, floorMat);
+            floor.rotation.x = -Math.PI / 2;
+            scene.add(floor);
+
+            createEnvironment();
+            createPortal();
+            spawnEnemies();
+
+            // PointerLock Controls (마우스 시점 제어)
+            blocker.addEventListener('click', () => {
+                renderer.domElement.requestPointerLock();
+            });
+
+            document.addEventListener('pointerlockchange', () => {
+                if (document.pointerLockElement === renderer.domElement) {
+                    blocker.style.display = 'none';
+                    gameActive = true;
+                } else {
+                    blocker.style.display = 'flex';
+                    gameActive = false;
+                }
+            });
+
+            // 키보드 이벤트
+            document.addEventListener('keydown', onKeyDown);
+            document.addEventListener('keyup', onKeyUp);
+            document.addEventListener('click', shootBullet);
+        }
+
+        function createEnvironment() {
+            const wallMat = new THREE.MeshBasicMaterial({ color: 0x222244, wireframe: true });
+            const boxGeo = new THREE.BoxGeometry(4, 4, 4);
+
+            for (let i = 0; i < 15; i++) {
+                const mesh = new THREE.Mesh(boxGeo, wallMat);
+                mesh.position.x = (Math.random() - 0.5) * 60;
+                mesh.position.y = 2;
+                mesh.position.z = (Math.random() - 0.5) * 60;
+                if (Math.hypot(mesh.position.x, mesh.position.z) > 10) {
+                    scene.add(mesh);
+                }
+            }
+        }
+
+        function createPortal() {
+            const portalGeo = new THREE.CylinderGeometry(2, 2, 6, 32);
+            const portalMat = new THREE.MeshBasicMaterial({ color: 0x4DEEEA, wireframe: true });
+            portal = new THREE.Mesh(portalGeo, portalMat);
+            portal.position.set((Math.random() - 0.5) * 40, 3, -40);
+            scene.add(portal);
+        }
+
+        function spawnEnemies() {
+            const droneGeo = new THREE.SphereGeometry(1.2, 8, 8);
+            const droneMat = new THREE.MeshBasicMaterial({ color: 0xff5555, wireframe: true });
+
+            for (let i = 0; i < 8; i++) {
+                const drone = new THREE.Mesh(droneGeo, droneMat);
+                drone.position.set((Math.random() - 0.5) * 50, 1.5, (Math.random() - 0.5) * 50);
+                scene.add(drone);
+                enemies.push(drone);
+            }
+        }
+
+        function onKeyDown(e) {
+            if (!gameActive) return;
+            if (e.code === 'KeyW') moveForward = true;
+            if (e.code === 'KeyS') moveBackward = true;
+            if (e.code === 'KeyA') moveLeft = true;
+            if (e.code === 'KeyD') moveRight = true;
+        }
+
+        function onKeyUp(e) {
+            if (e.code === 'KeyW') moveForward = false;
+            if (e.code === 'KeyS') moveBackward = false;
+            if (e.code === 'KeyA') moveLeft = false;
+            if (e.code === 'KeyD') moveRight = false;
+        }
+
+        // 마우스 시점 조절
+        document.addEventListener('mousemove', (e) => {
+            if (!gameActive) return;
+            const movementX = e.movementX || 0;
+            const movementY = e.movementY || 0;
+
+            yaw -= movementX * 0.0015;
+            pitch -= movementY * 0.0015;
+            pitch = Math.max(-Math.PI / 3, Math.min(Math.PI / 3, pitch));
+
+            camera.rotation.set(0, 0, 0);
+            camera.rotateY(yaw);
+            camera.rotateX(pitch);
+        });
+
+        // 총알 발사
+        function shootBullet() {
+            if (!gameActive) return;
+            const bulletGeo = new THREE.SphereGeometry(0.2, 8, 8);
+            const bulletMat = new THREE.MeshBasicMaterial({ color: 0x4DEEEA });
+            const bullet = new THREE.Mesh(bulletGeo, bulletMat);
+
+            bullet.position.copy(camera.position);
+            
+            const directionVector = new THREE.Vector3();
+            camera.getWorldDirection(directionVector);
+
+            bullet.velocity = directionVector.clone().multiplyScalar(1.5);
+            scene.add(bullet);
+            bullets.push(bullet);
+        }
+
+        function animate() {
+            requestAnimationFrame(animate);
+
+            const time = performance.now();
+            const delta = Math.min((time - prevTime) / 1000, 0.1);
+
+            if (gameActive) {
+                const speed = 6.0 * delta;
+
+                // 시점 방향(yaw)을 기준으로 이동 벡터 계산
+                const forward = new THREE.Vector3(0, 0, -1).applyAxisAngle(new THREE.Vector3(0, 1, 0), yaw);
+                const right = new THREE.Vector3(1, 0, 0).applyAxisAngle(new THREE.Vector3(0, 1, 0), yaw);
+
+                if (moveForward) camera.position.addScaledVector(forward, speed);
+                if (moveBackward) camera.position.addScaledVector(forward, -speed);
+                if (moveLeft) camera.position.addScaledVector(right, -speed);
+                if (moveRight) camera.position.addScaledVector(right, speed);
+
+                camera.position.y = 1.6;
+
+                // 총알 업데이트
+                for (let i = bullets.length - 1; i >= 0; i--) {
+                    let b = bullets[i];
+                    b.position.add(b.velocity);
+
+                    for (let j = enemies.length - 1; j >= 0; j--) {
+                        let en = enemies[j];
+                        if (b.position.distanceTo(en.position) < 1.5) {
+                            scene.remove(en);
+                            enemies.splice(j, 1);
+                            scene.remove(b);
+                            bullets.splice(i, 1);
+                            score += 150;
+                            scoreDisplay.innerText = `SCORE: ${score}`;
+                            break;
+                        }
+                    }
+                }
+
+                // 적 AI 이동
+                for (let en of enemies) {
+                    en.lookAt(camera.position);
+                    en.translateZ(0.02);
+
+                    if (en.position.distanceTo(camera.position) < 1.5) {
+                        hp -= 5;
+                        hpDisplay.innerText = `SYSTEM HP: ${hp}`;
+                        if (hp <= 0) {
+                            alert("SYSTEM SHUTDOWN... 브레이크 아웃 실패");
+                            location.reload();
+                        }
+                    }
+                }
+
+                // 탈출 포탈 도달
+                if (portal && camera.position.distanceTo(portal.position) < 2.5) {
+                    alert("탈출 성공! 메인프레임 방어망을 뚫었습니다!");
+                    location.reload();
+                }
+            }
+
+            prevTime = time;
+            renderer.render(scene, camera);
+        }
+    </script>
+</body>
+</html>

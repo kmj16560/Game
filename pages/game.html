@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>게임 소개 - 잔별 : Janbyeol</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <style>
+        /* 게임 소개 페이지 전용 추가 스타일 */
+        .game-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        .game-section {
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 2.5rem;
+            margin-bottom: 3rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .game-section h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: var(--accent-cyan);
+        }
+
+        .game-section.rpg h2 {
+            color: var(--accent-gold);
+        }
+
+        .game-meta {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 0.75rem;
+        }
+
+        .game-content h3 {
+            font-size: 1.3rem;
+            margin: 1.5rem 0 0.75rem 0;
+            color: var(--text-main);
+        }
+
+        .game-content ul {
+            list-style: disc;
+            padding-left: 1.5rem;
+            color: var(--text-muted);
+        }
+
+        .game-content li {
+            margin-bottom: 0.5rem;
+        }
+
+        .game-content p {
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+            line-height: 1.7;
+        }
+
+        .play-btn {
+            display: inline-block;
+            margin-top: 1.5rem;
+            padding: 0.75rem 1.5rem;
+            background-color: var(--accent-cyan);
+            color: #05050a;
+            font-weight: bold;
+            border-radius: 4px;
+            text-decoration: none;
+            transition: opacity 0.2s;
+        }
+
+        .play-btn:hover {
+            opacity: 0.85;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 헤더 영역 (js/header.js로 자동 동적 생성) -->
+    <header id="header"></header>
+
+    <!-- 메인 컨텐츠 영역 -->
+    <main>
+        <div class="game-container">
+            
+            <!-- 1. 사이버 FPS: Glitch:Off -->
+            <section id="fps-section" class="game-section">
+                <h2>Glitch:Off</h2>
+                <div class="game-meta">장르: 사이버 FPS / 해킹 건플레이 | 상태: 서비스 중</div>
+                <div class="game-content">
+                    <p><strong>거대 기업이 관리하는 가상의 메인프레임(가상 도시) 내부.</strong> 플레이어는 시스템의 통제를 거부하는 해커이자 해방군인 <strong>'브레이크 아웃(Breakout)'</strong>의 일원이 되어 메인프레임의 방어 시스템을 뚫어야 합니다. 적의 메인 서버를 해킹하여 시스템을 완전히 다운시키거나, 제한 시간 내에 탈출 포탈(Exit Port)에 도달하는 것이 목적인 실시간 웹 멀티플레이 전투 게임입니다.</p>
+                    
+                    <h3>어떤 형식의 게임인가요?</h3>
+                    <ul>
+                        <li><strong>웹 링크로 즐기는 실시간 멀티플레이:</strong> 별도의 복잡한 설치 없이 링크 하나로 접속해 친구나 다른 플레이어와 1:1 또는 팀전 데스매치, 협동 PvE 생존전을 벌입니다.</li>
+                        <li><strong>해킹 건플레이 & 특수 능력:</strong> 적에게 총격을 가해 체력을 깎는 것은 물론, 스킬로 적의 시야를 방해하거나 무기를 일시적으로 'Off(오프)' 상태로 만듭니다. 또한 '글리치 대시'를 통해 데이터 조각으로 변해 적의 총알을 통과하며 고속 이동할 수 있습니다.</li>
+                        <li><strong>몰입형 웹 특화 연출:</strong> 링크에 접속하면 가짜 'Fatal System Error 404' 에러창이 먼저 반겨주며, 피격 시 화면이 모니터 깨지듯 지지직거립니다. 사망 시 블루스크린과 함께 "SYSTEM SHUTDOWN... REBOOTING..." 문구가 뜨며 부활하고, 게임 중 다른 탭으로 넘어가면 브라우저 탭 이름이 경고 문구로 바뀌는 독특한 웹 연출을 제공합니다.</li>
+                    </ul>
+
+                    <!-- 게임 플레이 페이지로 이동하는 버튼 추가 -->
+                    <a href="glitch-off.html" class="play-btn">Glitch:Off 플레이하기</a>
+                </div>
+            </section>
+
+            <!-- 2. 판타지 RPG: 비엔토 -->
+            <section id="rpg-section" class="game-section rpg">
+                <h2>비엔토 : 바람의 서사시</h2>
+                <div class="game-meta">장르: 판타지 RPG / 모험 서사 | 상태: 제작 예정</div>
+                <div class="game-content">
+                    <p><strong>대륙 전체가 거대한 바람의 기류로 연결된 세계 '비엔토'.</strong> 전 세계의 바람이 모여 기록된다는 전설의 고대 도서관이자 하늘의 길인 '풍신의 탑(Tower of Zephyrus)'이 존재합니다. 세상의 균형을 유지하던 바람의 기류가 멈추거나 왜곡되면서 나타난 미지의 섬과 던전들을 탐험하며, 멈춰버린 바람의 원인을 찾고 세상의 서사시를 다시 쓰기 위한 대장정을 떠나는 정통 판타지 RPG입니다.</p>
+                    
+                    <h3>어떤 형식의 게임인가요?</h3>
+                    <ul>
+                        <li><strong>바람의 길 항해 탐험:</strong> 지도를 직접 복잡하게 돌아다니는 방식 대신, 웹 게임의 특성에 맞게 '바람의 기류'를 타고 새로운 지역으로 항해하듯 이동합니다. 날씨와 바람의 방향에 따라 숨겨진 보물섬이나 레이드 보스 지역이 열립니다.</li>
+                        <li><strong>음유시인의 수첩 (도감 및 업적):</strong> 퀘스트나 모험의 기록이 딱딱한 시스템 텍스트가 아닌, 한 편의 시나 노래 가사 형태로 일지에 기록됩니다. 플레이어의 업적이 서버 내에 음유시인의 노래로 퍼져나가며 명예 보상을 얻습니다.</li>
+                        <li><strong>캠프파이어와 동료:</strong> 혼자만의 외로운 모험이 아니라, 여관에서 만난 동료(바람의 검사, 별빛 성직자, 룬 마법사 등)를 고용해 파티를 꾸립니다. 화면 한쪽에 아늑한 캠프파이어 야영지가 마련되어 동료들과 대화하며 호감도를 올리고 다음 모험을 위한 버프와 스토리를 해금합니다.</li>
+                    </ul>
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <!-- 푸터 영역 (js/footer.js로 자동 동적 생성) -->
+    <footer id="footer"></footer>
+
+    <!-- 자바스크립트 로드 -->
+    <script src="../js/header.js"></script>
+    <script src="../js/footer.js"></script>
+    <script src="../js/menu.js"></script>
+    <script src="../js/main.js"></script>
+</body>
+</html>

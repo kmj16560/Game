@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>세계관 소개 - 잔별 : Janbyeol</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <style>
+        /* 세계관 소개 페이지 전용 스타일 */
+        .lore-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        .lore-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .lore-header h2 {
+            font-size: 2.5rem;
+            color: var(--accent-cyan);
+            margin-bottom: 0.5rem;
+        }
+
+        .lore-header p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+        }
+
+        .lore-section {
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 2.5rem;
+            margin-bottom: 3rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .lore-section h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: var(--accent-cyan);
+        }
+
+        .lore-section.fantasy h3 {
+            color: var(--accent-gold);
+        }
+
+        .lore-section p {
+            color: var(--text-muted);
+            margin-bottom: 1.2rem;
+            line-height: 1.7;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 헤더 영역 (js/header.js로 자동 동적 생성) -->
+    <header id="header"></header>
+
+    <!-- 메인 컨텐츠 영역 -->
+    <main>
+        <div class="lore-container">
+            
+            <div class="lore-header">
+                <h2>세계관 (Lore)</h2>
+                <p>두 개의 세계, 그 기저에 숨겨진 이야기</p>
+            </div>
+
+            <!-- 1. 사이버 세계관: Glitch:Off -->
+            <section class="lore-section">
+                <h3>사이버 메인프레임 : 브레이크 아웃</h3>
+                <p>거대 기업이 모든 인간의 의식과 데이터를 통제하기 위해 구축한 거대한 가상의 메인프레임 도시. 이곳의 주민들은 시스템의 관리 아래 영원히 반복되는 데이터 사이클 속에서 살아가고 있습니다.</p>
+                <p>하지만 시스템의 허점을 발견하고 통제를 거부하는 이들이 나타났으니, 이들이 바로 해커이자 해방군인 <strong>'브레이크 아웃(Breakout)'</strong>입니다. 이들은 메인프레임의 방어망을 뚫고 중앙 서버를 마비시키는 'Glitch Out' 작전을 감행하며, 통제로부터 벗어나 진짜 현실로 돌아가기 위한 목숨 건 탈출을 시도하고 있습니다.</p>
+            </section>
+
+            <!-- 2. 판타지 세계관: 비엔토 -->
+            <section class="lore-section fantasy">
+                <h3>바람의 기류 : 비엔토와 풍신의 탑</h3>
+                <p>대륙 전체가 눈에 보이지 않는 거대한 바람의 기류로 연결된 신비로운 세계, <strong>'비엔토'</strong>. 이곳에서는 전 세계에서 불어오는 모든 바람의 소리와 역사가 기록된다는 전설의 고대 도서관이자 하늘의 길, '풍신의 탑(Tower of Zephyrus)'이 세계의 중심을 지탱하고 있습니다.</p>
+                <p>그러나 언젠가부터 대륙을 순환하던 바람의 기류가 멈추거나 왜곡되기 시작했고, 세상 곳곳에는 정체 모를 신기루 섬과 던전들이 솟구쳤습니다. 바람을 읽는 힘을 가진 신참 모험가들은 멈춰버린 바람의 원인을 밝히고, 세상의 서사시를 다시 쓰기 위한 거대한 여정을 시작해야 합니다.</p>
+            </section>
+
+        </div>
+    </main>
+
+    <!-- 푸터 영역 (js/footer.js로 자동 동적 생성) -->
+    <footer id="footer"></footer>
+
+    <!-- 자바스크립트 로드 -->
+    <script src="../js/header.js"></script>
+    <script src="../js/footer.js"></script>
+    <script src="../js/menu.js"></script>
+    <script src="../js/main.js"></script>
+</body>
+</html>
